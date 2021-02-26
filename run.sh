@@ -27,24 +27,34 @@ test_srcs="test/main.c test/test_doubles.c test/test_integers.c test/test_string
 #	printf "Norme OK\n"
 #fi
 
-rm -f norm_output norm_errors
+#rm -f norm_output norm_errors
 
 #################
 ### test make ###
 #################
 
-make && make clean
+make fclean && make && make clean
 if [ $? != 0 ]
 then
-#	printf "make error\n"
 	exit 1
 fi
 
 #make all && make re && make fclean && make && make clean
+#if [ $? != 0 ]
+#then
+#	printf "make error\n"
+#	exit 1
+#fi
+
 
 ###################
 ### basic tests ###
 ###################
+
+for f in test/*.test
+do
+	mv "$f" "${f%.test}"
+done
 
 rm -f test_exe
 
@@ -101,7 +111,7 @@ printf "\nTesting unsigned integers... "
 { ./test_exe ft_printf uints > user_output_uints; } 2> err_output
 if [ $? != 0 ]
 then
-	printf "seg fault"
+	printf "seg fault: run `./test_exe ftprintf uints` for more info"
 	#cat err_output
 	exit 1
 fi
@@ -121,7 +131,7 @@ printf "\nTesting pointers... "
 { ./test_exe ptrs > ptr_output; } 2> err_output
 if [ $? != 0 ]
 then
-	printf "seg fault"
+	printf "seg fault: run `./test_exe ptrs` for more info"
 	#cat err_output
 	exit 1
 fi
@@ -161,7 +171,20 @@ fi
 
 rm err_output test_output* user_output* ptr_output
 
-printf "\nTesting leaks...\n\n"
+for f in test/*.c
+do
+	mv "$f" "${f}.test"
+done
+mv test/tests.h test/tests.h.test
+
+###################
+### test leaks ###
+###################
+
+#printf "\nTesting leaks with valgrind...\n\n"
+#./test_exe ft_printf all valgrind > valgrind_output
+
+printf "\nTesting leaks with leaks...\n\n"
 ./test_exe ft_printf all leaks > leaks_output
 grep -a -e "nodes malloced" -A 1 leaks_output
 
