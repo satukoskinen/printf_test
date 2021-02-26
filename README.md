@@ -6,7 +6,12 @@ To run the tests, first clone this repo in the root of your ft_printf project:
 ```
 git clone https://github.com/satukoskinen/printf_test.git test
 ```
-Then modify the ``run.sh`` script configuration to have the correct include and library paths. 
+Then modify the ``run.sh`` script configuration to have the correct include and library paths.
+
+Finally, run the tests from the root with
+```
+./test/run.sh
+```
 
 The script is divided in four parts:
 1) testing norminette,
