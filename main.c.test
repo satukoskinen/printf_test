@@ -31,7 +31,9 @@ int		main(int argc, char **argv)
 	else if ((argc > 1 && strcmp(argv[1], "dbls" ) == 0) || (argc > 2 && strcmp(argv[2], "dbls") == 0))
 		test_doubles(use_ftprintf);
 	
-	if (argc > 1 && strcmp(argv[argc - 1], "leaks") == 0)
+	if (argc > 1 && strcmp(argv[argc - 1], "valgrind") == 0)
 		system("valgrind --leak-check=full ./test_exe ft_printf all");
+	if (argc > 1 && strcmp(argv[argc - 1], "leaks") == 0)
+		system("leaks test_exe");
 	return (0);
 }
