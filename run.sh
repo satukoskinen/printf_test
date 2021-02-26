@@ -72,7 +72,7 @@ printf "\nTesting strings... "
 if [ $? != 0 ]
 then
 	printf "seg fault: run './test_exe ftprintf strings' for more info"
-	#cat err_output
+	cat err_output
 	exit 1
 fi
 ./test_exe printf strings > test_output_strings
@@ -84,7 +84,7 @@ then
 #	exit 1
 else
 	printf "diff OK\n"
-	rm diff_strings
+	rm diff_strings user_output_strings test_output_strings
 fi
 
 printf "\nTesting signed integers... "
@@ -92,7 +92,7 @@ printf "\nTesting signed integers... "
 if [ $? != 0 ]
 then
 	printf "seg fault: run `./test_exe ftprintf ints` for more info"
-	#cat err_output
+	cat err_output
 	exit 1
 fi
 ./test_exe printf ints > test_output_ints
@@ -104,7 +104,7 @@ then
 #	exit 1
 else
 	printf "diff OK\n"
-	rm diff_ints
+	rm diff_ints user_output_ints test_output_ints
 fi
 
 printf "\nTesting unsigned integers... "
@@ -112,7 +112,7 @@ printf "\nTesting unsigned integers... "
 if [ $? != 0 ]
 then
 	printf "seg fault: run `./test_exe ftprintf uints` for more info"
-	#cat err_output
+	cat err_output
 	exit 1
 fi
 ./test_exe printf uints > test_output_uints
@@ -124,7 +124,7 @@ then
 	#exit 1
 else
 	printf "diff OK\n"
-	rm diff_uints
+	rm diff_uints user_output_uints test_output_uints
 fi
 
 printf "\nTesting pointers... "
@@ -132,7 +132,7 @@ printf "\nTesting pointers... "
 if [ $? != 0 ]
 then
 	printf "seg fault: run `./test_exe ptrs` for more info"
-	#cat err_output
+	cat err_output
 	exit 1
 fi
 line_count=$(cat ptr_output | wc -l | sed "s/ //g")
@@ -146,15 +146,15 @@ then
 #	exit 1
 else
 	printf "diff OK\n"
-	rm diff_ptrs
+	rm diff_ptrs user_output_ptrs test_output_ptrs ptr_output
 fi
 
 printf "\nTesting doubles... "
 { ./test_exe ft_printf dbls > user_output_dbls; } 2> err_output
 if [ $? != 0 ]
 then
-	printf "seg fault"
-	#cat err_output
+	printf "seg fault run `./test_exe dbls` for more info"
+	cat err_output
 	exit 1
 fi
 ./test_exe printf dbls > test_output_dbls
@@ -166,16 +166,13 @@ then
 #	exit 1
 else
 	printf "diff OK\n"
-	rm diff_dbls
+	rm diff_dbls user_output_dbls test_output_dbls
 fi
 
-rm err_output test_output* user_output* ptr_output
-
-for f in test/*.c
+for f in test/*.[ch]
 do
 	mv "$f" "${f}.test"
 done
-mv test/tests.h test/tests.h.test
 
 ###################
 ### test leaks ###
