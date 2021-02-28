@@ -19,6 +19,7 @@ int		main(int argc, char **argv)
 		test_unsigned_integers(use_ftprintf);
 		test_pointers();
 		test_doubles(use_ftprintf);
+		test_long_doubles(use_ftprintf);
 	}
 	else if ((argc > 1 && strcmp(argv[1], "strings") == 0) || (argc > 2 && strcmp(argv[2], "strings") == 0))
 		test_strings(use_ftprintf);
@@ -30,6 +31,8 @@ int		main(int argc, char **argv)
 		test_pointers();
 	else if ((argc > 1 && strcmp(argv[1], "dbls" ) == 0) || (argc > 2 && strcmp(argv[2], "dbls") == 0))
 		test_doubles(use_ftprintf);
+	else if ((argc > 1 && strcmp(argv[1], "ldbls" ) == 0) || (argc > 2 && strcmp(argv[2], "ldbls") == 0))
+		test_long_doubles(use_ftprintf);
 	
 	if (argc > 1 && strcmp(argv[argc - 1], "valgrind") == 0)
 		system("valgrind --leak-check=full ./test_exe ft_printf all");

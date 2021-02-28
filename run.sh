@@ -9,7 +9,7 @@ CFLAGS="-Wall -Wextra -Werror -g" #compiler flags
 INCLUDES="-I . -I include" #ft_printf.h location
 LDFLAGS="-L . -l ftprintf" #static library and its location
 
-test_srcs="test/main.c test/test_doubles.c test/test_integers.c test/test_strings.c test/test_undefined_behaviour.c test/test_unsigned_integers.c test/test_pointers.c"
+test_srcs="printf_test/*.c"
 
 #######################
 ### test norminette ###
@@ -51,7 +51,7 @@ fi
 ### basic tests ###
 ###################
 
-for f in test/*.test
+for f in printf_test/*.test
 do
 	mv "$f" "${f%.test}"
 done
@@ -153,7 +153,7 @@ printf "\nTesting doubles... "
 { ./test_exe ft_printf dbls > user_output_dbls; } 2> err_output
 if [ $? != 0 ]
 then
-	printf "seg fault run `./test_exe dbls` for more info"
+	printf "seg fault run `./test_exe ftprintf dbls` for more info"
 	cat err_output
 	exit 1
 fi
@@ -169,7 +169,27 @@ else
 	rm diff_dbls user_output_dbls test_output_dbls
 fi
 
-for f in test/*.[ch]
+printf "\nTesting long doubles... "
+{ ./test_exe ft_printf ldbls > user_output_ldbls; } 2> err_output
+if [ $? != 0 ]
+then
+	printf "seg fault run `./test_exe ftprintf ldbls` for more info"
+	cat err_output
+	exit 1
+fi
+./test_exe printf ldbls > test_output_ldbls
+diff --text --suppress-common-lines -p user_output_ldbls test_output_ldbls > diff_ldbls
+if [ -s diff_ldbls ]
+then
+	printf "error, see diff_ldbls\n"
+#	cat diff
+#	exit 1
+else
+	printf "diff OK\n"
+	rm diff_ldbls user_output_ldbls test_output_ldbls
+fi
+
+for f in printf_test/*.[ch]
 do
 	mv "$f" "${f}.test"
 done
@@ -185,4 +205,4 @@ printf "\nTesting leaks with valgrind...\n\n"
 #./test_exe ft_printf all leaks > leaks_output
 #grep -a -e "nodes malloced" -A 1 leaks_output
 
-rm leaks_output
+rm -f valgrind_output leaks_output err_output
