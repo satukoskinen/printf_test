@@ -6,8 +6,8 @@
 
 CFLAGS="-Wall -Wextra -Werror -g" #compiler flags
 #CFLAGS="-g"
-INCLUDES="-I . -I include -I libft" #ft_printf.h and libft.h locations
-LDFLAGS="-L libft -l ft -L . -l ftprintf" #static libraries and their locations
+INCLUDES="-I . -I include" #ft_printf.h and libft.h locations
+LDFLAGS="-L . -l ftprintf" #static libraries and their locations
 
 test_srcs="test/main.c test/test_doubles.c test/test_integers.c test/test_strings.c test/test_undefined_behaviour.c test/test_unsigned_integers.c test/test_pointers.c"
 
@@ -178,11 +178,11 @@ done
 ### test leaks ###
 ###################
 
-#printf "\nTesting leaks with valgrind...\n\n"
-#./test_exe ft_printf all valgrind > valgrind_output
+printf "\nTesting leaks with valgrind...\n\n"
+./test_exe ft_printf all valgrind > valgrind_output
 
-printf "\nTesting leaks with leaks...\n\n"
-./test_exe ft_printf all leaks > leaks_output
-grep -a -e "nodes malloced" -A 1 leaks_output
+#printf "\nTesting leaks with leaks...\n\n"
+#./test_exe ft_printf all leaks > leaks_output
+#grep -a -e "nodes malloced" -A 1 leaks_output
 
 rm leaks_output

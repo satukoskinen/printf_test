@@ -109,7 +109,7 @@ void	test_signed_integers(int use_ftprintf)
 		ret = printf_ptr("24 '%%.' '%.d' '%.i'\n", signed_int[i], signed_int[i]);
 		printf_ptr("ret is %d\n", ret);
 
-		printf_ptr("\n---------------------------\n\n");
+		printf_ptr("\n\n\n\n\n\n\n\n");
 
 		i++;
 	}
@@ -198,7 +198,7 @@ void	test_signed_integers(int use_ftprintf)
 		ret = printf_ptr("24 '%%.' '%.hhd' '%.hhi'\n", signed_char[i], signed_char[i]);
 		printf_ptr("ret is %d\n", ret);
 
-		printf_ptr("\n---------------------------\n\n");
+		printf_ptr("\n\n\n\n\n\n\n\n");
 		i++;
 	}
 		
@@ -286,7 +286,7 @@ void	test_signed_integers(int use_ftprintf)
 		ret = printf_ptr("24 '%%.' '%.hd' '%.hi'\n", signed_short[i], signed_short[i]);
 		printf_ptr("ret is %d\n", ret);
 
-		printf_ptr("\n---------------------------\n\n");
+		printf_ptr("\n\n\n\n\n\n\n\n");
 		i++;
 	}
 
@@ -374,7 +374,7 @@ void	test_signed_integers(int use_ftprintf)
 		ret = printf_ptr("24 '%%.' '%.ld' '%.li'\n", signed_long[i], signed_long[i]);
 		printf_ptr("ret is %d\n", ret);
 
-		printf_ptr("\n---------------------------\n\n");
+		printf_ptr("\n\n\n\n\n\n\n\n");
 		i++;
 	}
 
@@ -462,7 +462,7 @@ void	test_signed_integers(int use_ftprintf)
 		ret = printf_ptr("24 '%%.' '%.lld' '%.lli'\n", signed_long_long[i], signed_long_long[i]);
 		printf_ptr("ret is %d\n", ret);
 
-		printf_ptr("\n---------------------------\n\n");
+		printf_ptr("\n\n\n\n\n\n\n\n");
 		i++;
 	}
 }

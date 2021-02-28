@@ -22,6 +22,6 @@ The script is divided in four parts:
 Norme testing is commented out by default, as well as the tests for all required make commands
 (make, make all, make clean, make fclean, make re). Basic tests will be run separately for
 strings & chars (%s, %c, %%) , signed integers (%d, %i), unsigned integers (%o, %u, %x, %X),
-pointers (%p) and doubles (%f, %F). For each of the conversions, tests are run on length modifiers
+pointers (%p) and doubles (%f, %F). Tests are run on length modifiers
 l, ll, h, hh for integers and L for doubles. The leaks test will run the system leaks command by default,
 but it can be switched to valgrind by uncommenting the lines in the script.
