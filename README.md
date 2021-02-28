@@ -4,13 +4,13 @@ Tests for the Hive ft_printf project of recreating the C printf function.
 
 To run the tests, first clone this repo in the root of your ft_printf project:
 ```
-git clone https://github.com/satukoskinen/printf_test.git test
+git clone https://github.com/satukoskinen/printf_test.git
 ```
 Then modify the ``run.sh`` script configuration to have the correct include and library paths.
 
 Finally, run the tests from the root with
 ```
-./test/run.sh
+./printf_test/run.sh
 ```
 
 The script is divided in four parts:
