@@ -6,8 +6,8 @@
 
 CFLAGS="-Wall -Wextra -Werror -g" #compiler flags
 #CFLAGS="-g"
-INCLUDES="-I . -I include" #ft_printf.h and libft.h locations
-LDFLAGS="-L . -l ftprintf" #static libraries and their locations
+INCLUDES="-I . -I include" #ft_printf.h location
+LDFLAGS="-L . -l ftprintf" #static library and its location
 
 test_srcs="test/main.c test/test_doubles.c test/test_integers.c test/test_strings.c test/test_undefined_behaviour.c test/test_unsigned_integers.c test/test_pointers.c"
 
