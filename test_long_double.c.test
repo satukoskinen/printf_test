@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "ft_printf.h"
 
-void	test_long_doubles(int use_ftprintf)
+void	test_long_double(int use_ftprintf)
 {
 	int		ret;
 	int		i;

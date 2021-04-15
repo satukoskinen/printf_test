@@ -9,8 +9,6 @@ CFLAGS="-Wall -Wextra -Werror -g" #compiler flags
 INCLUDES="-I . -I include" #ft_printf.h location
 LDFLAGS="-L . -l ftprintf" #static library and its location
 
-test_srcs="printf_test/*.c"
-
 #######################
 ### test norminette ###
 #######################
@@ -58,136 +56,82 @@ done
 
 rm -f test_exe
 
-printf "\nBasic tests...\n"
+printf "\nBasic tests...\n\n"
 
-gcc -o test_exe $CFLAGS $test_srcs $INCLUDES $LDFLAGS
+test_srcs="printf_test/test*.c"
+gcc -o test_exe $CFLAGS printf_test/main.c $test_srcs $INCLUDES $LDFLAGS
 if [ $? != 0 ]
 then
 	printf "compilation error"
 	exit 1
 fi
 
-printf "\nTesting strings... "
-{ ./test_exe ft_printf strings > user_output_strings; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault: run './test_exe ftprintf strings' for more info"
-	cat err_output
-	exit 1
-fi
-./test_exe printf strings > test_output_strings
-diff --text --suppress-common-lines -p user_output_strings test_output_strings > diff_strings
-if [ -s diff_strings ]
-then
-	printf "error, see diff_strings\n"
-#	cat diff
-#	exit 1
-else
-	printf "diff OK\n"
-	rm diff_strings user_output_strings test_output_strings
-fi
+run_test () {
+	local test_name=$1
+	local user_output="user_output_$test_name"
+	local test_output="test_output_$test_name"
+	local diff="diff_$test_name"
 
-printf "\nTesting signed integers... "
-{ ./test_exe ft_printf ints > user_output_ints; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault: run `./test_exe ftprintf ints` for more info"
-	cat err_output
-	exit 1
-fi
-./test_exe printf ints > test_output_ints
-diff --text --suppress-common-lines -p user_output_ints test_output_ints > diff_ints
-if [ -s diff_ints ]
-then
-	printf "error, see diff_ints\n"
-#	cat diff
-#	exit 1
-else
-	printf "diff OK\n"
-	rm diff_ints user_output_ints test_output_ints
-fi
+	printf "Run %-30s" "$test_name..."
+	{ ./test_exe ft_printf $test_name > $user_output; } 2> err_output
+	if [ $? != 0 ]
+	then
+		printf "seg fault: run './test_exe ft_printf $test_name' for more info"
+		cat err_output
+		exit 1
+	fi
+	./test_exe printf $test_name > $test_output
+	diff --text --suppress-common-lines -p $user_output $test_output > $diff
+	if [ -s $diff ]
+	then
+		printf "error, see $diff\n"
+	#	exit 1
+	else
+		printf "diff OK\n"
+		rm $diff $user_output $test_output
+	fi
+}
 
-printf "\nTesting unsigned integers... "
-{ ./test_exe ft_printf uints > user_output_uints; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault: run `./test_exe ftprintf uints` for more info"
-	cat err_output
-	exit 1
-fi
-./test_exe printf uints > test_output_uints
-diff --text --suppress-common-lines -p user_output_uints test_output_uints > diff_uints
-if [ -s diff_uints ]
-then
-	printf "error, see diff_uints\n"
-	#cat diff
-	#exit 1
-else
-	printf "diff OK\n"
-	rm diff_uints user_output_uints test_output_uints
-fi
+run_pointer_test () {
+	local test_name=$1
+	local output="ptr_output"
+	local user_output="user_output_$test_name"
+	local test_output="test_output_$test_name"
+	local diff="diff_$test_name"
 
-printf "\nTesting pointers... "
-{ ./test_exe ptrs > ptr_output; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault: run `./test_exe ptrs` for more info"
-	cat err_output
-	exit 1
-fi
-line_count=$(cat ptr_output | wc -l | sed "s/ //g")
-head -n $(( $line_count/2 )) ptr_output > user_output_ptrs
-tail -n $(( $line_count/2 )) ptr_output > test_output_ptrs
-diff --text --suppress-common-lines -p user_output_ptrs test_output_ptrs > diff_ptrs
-if [ -s diff_ptrs ]
-then
-	printf "error, see diff_ptrs\n"
-#	cat diff
-#	exit 1
-else
-	printf "diff OK\n"
-	rm diff_ptrs user_output_ptrs test_output_ptrs ptr_output
-fi
+	printf "Run %-30s" "$test_name..."
+	{ ./test_exe ft_printf $test_name > $output; } 2> err_output
+	if [ $? != 0 ]
+	then
+		printf "seg fault: run './test_exe ft_printf $test_name' for more info"
+		cat err_output
+		exit 1
+	fi
+	line_count=$(cat $output | wc -l | sed "s/ //g")
+	head -n $(( $line_count / 2 )) $output > $user_output
+	tail -n $(( $line_count / 2 )) $output > $test_output
+	diff --text --suppress-common-lines -p $user_output $test_output > $diff
+	if [ -s $diff ]
+	then
+		printf "error, see $diff\n"
+	#	exit 1
+	else
+		printf "diff OK\n"
+		rm $output $user_output $test_output $diff
+	fi
+}
 
-printf "\nTesting doubles... "
-{ ./test_exe ft_printf dbls > user_output_dbls; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault run `./test_exe ftprintf dbls` for more info"
-	cat err_output
-	exit 1
-fi
-./test_exe printf dbls > test_output_dbls
-diff --text --suppress-common-lines -p user_output_dbls test_output_dbls > diff_dbls
-if [ -s diff_dbls ]
-then
-	printf "error, see diff_dbls\n"
-#	cat diff
-#	exit 1
-else
-	printf "diff OK\n"
-	rm diff_dbls user_output_dbls test_output_dbls
-fi
-
-printf "\nTesting long doubles... "
-{ ./test_exe ft_printf ldbls > user_output_ldbls; } 2> err_output
-if [ $? != 0 ]
-then
-	printf "seg fault run `./test_exe ftprintf ldbls` for more info"
-	cat err_output
-	exit 1
-fi
-./test_exe printf ldbls > test_output_ldbls
-diff --text --suppress-common-lines -p user_output_ldbls test_output_ldbls > diff_ldbls
-if [ -s diff_ldbls ]
-then
-	printf "error, see diff_ldbls\n"
-#	cat diff
-#	exit 1
-else
-	printf "diff OK\n"
-	rm diff_ldbls user_output_ldbls test_output_ldbls
-fi
+for test in $test_srcs
+do
+	test_name="${test#printf_test/}"
+	test_name="${test_name%.c}"
+	if [ $test_name == "test_pointer" ]
+	then
+		run_pointer_test $test_name
+	else
+		run_test $test_name
+	fi
+done
 
 for f in printf_test/*.[ch]
 do
@@ -198,11 +142,19 @@ done
 ### test leaks ###
 ###################
 
-printf "\nTesting leaks with valgrind...\n\n"
-./test_exe ft_printf all valgrind > valgrind_output
-
-#printf "\nTesting leaks with leaks...\n\n"
-#./test_exe ft_printf all leaks > leaks_output
-#grep -a -e "nodes malloced" -A 1 leaks_output
+echo ""
+read -n 1 -p "Test leaks with valgrind [v] or leaks [l]? " leaks
+if [ $leaks == "v" ]
+then
+	printf "\n\nTesting leaks with valgrind...\n\n"
+	./test_exe ft_printf all valgrind > valgrind_output
+elif [ $leaks == "l" ]
+then
+	printf "\n\nTesting leaks with leaks...\n\n"
+	./test_exe ft_printf all leaks > leaks_output
+	grep -a -e "nodes malloced" -A 1 leaks_output
+else
+	echo ""
+fi
 
 rm -f valgrind_output leaks_output err_output

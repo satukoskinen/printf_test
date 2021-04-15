@@ -8,32 +8,59 @@ int		main(int argc, char **argv)
 {
 	int		use_ftprintf;
 
-	if (argc == 1 || (argc > 1 && (strcmp(argv[1], "ft_printf") == 0 || strcmp(argv[1], "ftprintf") == 0)))
-		use_ftprintf = 1;
-	else
+	if (argc > 1 && strcmp(argv[1], "printf") == 0)
 		use_ftprintf = 0;
-	if (argc == 1 || (argc > 1 && strcmp(argv[1], "all") == 0) || (argc > 2 && strcmp(argv[2], "all") == 0))
+	else
+		use_ftprintf = 1;
+	if (argc == 1 || (argc > 2 && strcmp(argv[2], "test_all") == 0))
 	{
-		test_strings(use_ftprintf);
-		test_signed_integers(use_ftprintf);
-		test_unsigned_integers(use_ftprintf);
-		test_pointers();
-		test_doubles(use_ftprintf);
-		test_long_doubles(use_ftprintf);
+		test_char(use_ftprintf);
+		test_string(use_ftprintf);
+		test_pointer();
+		test_int(use_ftprintf);
+		test_signed_char(use_ftprintf);
+		test_short_int(use_ftprintf);
+		test_long_int(use_ftprintf);
+		test_long_long_int(use_ftprintf);
+		test_unsigned_int(use_ftprintf);
+		test_unsigned_char(use_ftprintf);
+		test_unsigned_short_int(use_ftprintf);
+		test_unsigned_long_int(use_ftprintf);
+		test_unsigned_long_long_int(use_ftprintf);
+		test_double(use_ftprintf);
+		test_long_double(use_ftprintf);
 	}
-	else if ((argc > 1 && strcmp(argv[1], "strings") == 0) || (argc > 2 && strcmp(argv[2], "strings") == 0))
-		test_strings(use_ftprintf);
-	else if ((argc > 1 && strcmp(argv[1], "ints") == 0) || (argc > 2 && strcmp(argv[2], "ints") == 0))
-		test_signed_integers(use_ftprintf);
-	else if ((argc > 1 && strcmp(argv[1], "uints") == 0) || (argc > 2 && strcmp(argv[2], "uints") == 0))
-		test_unsigned_integers(use_ftprintf);
-	else if ((argc > 1 && strcmp(argv[1], "ptrs") == 0) || (argc > 2 && strcmp(argv[2], "ptrs") == 0))
-		test_pointers();
-	else if ((argc > 1 && strcmp(argv[1], "dbls" ) == 0) || (argc > 2 && strcmp(argv[2], "dbls") == 0))
-		test_doubles(use_ftprintf);
-	else if ((argc > 1 && strcmp(argv[1], "ldbls" ) == 0) || (argc > 2 && strcmp(argv[2], "ldbls") == 0))
-		test_long_doubles(use_ftprintf);
-	
+	else if (strcmp(argv[2], "test_char") == 0)
+		test_char(use_ftprintf);
+	else if (strcmp(argv[2], "test_string") == 0)
+		test_string(use_ftprintf);
+	else if (strcmp(argv[2], "test_pointer") == 0)
+		test_pointer();
+	else if (strcmp(argv[2], "test_int") == 0)
+		test_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_signed_char") == 0)
+		test_signed_char(use_ftprintf);
+	else if (strcmp(argv[2], "test_short_int") == 0)
+		test_short_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_long_int") == 0)
+		test_long_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_long_long_int") == 0)
+		test_long_long_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_unsigned_int") == 0)
+		test_unsigned_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_unsigned_char") == 0)
+		test_unsigned_char(use_ftprintf);
+	else if (strcmp(argv[2], "test_unsigned_short_int") == 0)
+		test_unsigned_short_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_unsigned_long_int") == 0)
+		test_unsigned_long_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_unsigned_long_long_int") == 0)
+		test_unsigned_long_long_int(use_ftprintf);
+	else if (strcmp(argv[2], "test_double") == 0)
+		test_double(use_ftprintf);
+	else if (strcmp(argv[2], "test_long_double") == 0)
+		test_long_double(use_ftprintf);
+
 	if (argc > 1 && strcmp(argv[argc - 1], "valgrind") == 0)
 		system("valgrind --leak-check=full ./test_exe ft_printf all");
 	if (argc > 1 && strcmp(argv[argc - 1], "leaks") == 0)
