@@ -49,7 +49,7 @@ fi
 ### basic tests ###
 ###################
 
-for f in printf_test/*.test
+for f in printf_test/src/*.test
 do
 	mv "$f" "${f%.test}"
 done
@@ -58,8 +58,8 @@ rm -f test_exe
 
 printf "\nBasic tests...\n\n"
 
-test_srcs="printf_test/test*.c"
-gcc -o test_exe $CFLAGS printf_test/main.c $test_srcs $INCLUDES $LDFLAGS
+test_srcs="printf_test/src/test*.c"
+gcc -o test_exe $CFLAGS printf_test/src/main.c $test_srcs $INCLUDES $LDFLAGS
 if [ $? != 0 ]
 then
 	printf "compilation error"
@@ -123,7 +123,7 @@ run_pointer_test () {
 
 for test in $test_srcs
 do
-	test_name="${test#printf_test/}"
+	test_name="${test#printf_test/src/}"
 	test_name="${test_name%.c}"
 	if [ $test_name == "test_pointer" ]
 	then
@@ -133,7 +133,7 @@ do
 	fi
 done
 
-for f in printf_test/*.[ch]
+for f in printf_test/src/*.[ch]
 do
 	mv "$f" "${f}.test"
 done
