@@ -4,10 +4,10 @@
 ### config ###
 ##############
 
-CFLAGS="-Wall -Wextra -Werror -g" #compiler flags
+CFLAGS="-Wall -Wextra -Werror" -g #-fsanitize=address" #compiler flags
 #CFLAGS="-g"
-INCLUDES="-I . -I include" #ft_printf.h location
-LDFLAGS="-L . -l ftprintf" #static library and its location
+INCLUDES="-I . -I includes" #ft_printf.h location
+LDFLAGS="-L . -l ftprintf" #-fsanitize=address" #static library and its location
 
 #######################
 ### test norminette ###
@@ -104,7 +104,7 @@ run_pointer_test () {
 	if [ $? != 0 ]
 	then
 		printf "seg fault: run './test_exe ft_printf $test_name' for more info"
-		cat err_output
+		cat err_output./
 		exit 1
 	fi
 	line_count=$(cat $output | wc -l | sed "s/ //g")
@@ -151,7 +151,7 @@ then
 elif [ $leaks == "l" ]
 then
 	printf "\n\nTesting leaks with leaks...\n\n"
-	./test_exe ft_printf all leaks > leaks_output
+	./test_exe ft_printf test_all leaks > leaks_output
 	grep -a -e "nodes malloced" -A 1 leaks_output
 else
 	echo ""
